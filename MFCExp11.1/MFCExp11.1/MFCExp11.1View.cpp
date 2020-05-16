@@ -16,7 +16,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+int flag;
 
 // CMFCExp111View
 
@@ -24,6 +24,11 @@ IMPLEMENT_DYNCREATE(CMFCExp111View, CRecordView)
 
 BEGIN_MESSAGE_MAP(CMFCExp111View, CRecordView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMFCExp111View::OnShowPicture)
+	ON_COMMAND(ID_RECORD_FIRST, &CMFCExp111View::OnRecordFirst)
+	ON_COMMAND(ID_RECORD_PREV, &CMFCExp111View::OnRecordPrev)
+	ON_COMMAND(ID_RECORD_NEXT, &CMFCExp111View::OnRecordNext)
+	ON_COMMAND(ID_RECORD_LAST, &CMFCExp111View::OnRecordLast)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMFCExp111View::OnAutoDisplay)
 END_MESSAGE_MAP()
 
 // CMFCExp111View 构造/析构
@@ -110,7 +115,8 @@ void CMFCExp111View::foo(CImage& img, int& sx, int& sy, int& w, int& h)
 	GetDlgItem(IDC_PICTURE)->GetClientRect(&rect);
 	float rect_ratio = 1.0*rect.Width() / rect.Height();
 	float img_ratio = 1.0*img.GetWidth() / img.GetHeight();
-	if (rect_ratio > img_ratio) {
+	if (rect_ratio > img_ratio)
+	{
 		h = rect.Height();
 		w = img_ratio*h;
 		sx = (rect.Width() - w) / 2;
@@ -133,11 +139,127 @@ void CMFCExp111View::OnShowPicture()
 	// TODO: 在此添加控件通知处理程序代码
 	CString s;
 	CImage img;
-	m_pSet->GetFieldValue(short(4), s);
-	img.Load(s);
 	CDC *pDC = GetDlgItem(IDC_PICTURE)->GetDC();//凡是用到getdc必须释放它
 	pDC->SetStretchBltMode(HALFTONE);//图像不失真
+	m_pSet->GetFieldValue(short(4), s);
+
+	img.Load(s);
+	
 	int sx, sy, w, h;
 	foo(img, sx, sy, w, h);
 	img.Draw(pDC->m_hDC, sx, sy, w, h);
+}
+
+
+void CMFCExp111View::OnRecordFirst()
+{
+	// TODO: 在此添加命令处理程序代码
+	m_pSet->MoveFirst();
+	UpdateData(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(true);
+	if (flag)
+	{
+		CString s;
+		CImage img;
+		CDC *pDC = GetDlgItem(IDC_PICTURE)->GetDC();//凡是用到getdc必须释放它
+		pDC->SetStretchBltMode(HALFTONE);//图像不失真
+		m_pSet->GetFieldValue(short(4), s);
+
+		img.Load(s);
+
+		int sx, sy, w, h;
+		foo(img, sx, sy, w, h);
+		img.Draw(pDC->m_hDC, sx, sy, w, h);
+	}
+}
+
+
+void CMFCExp111View::OnRecordPrev()
+{
+	// TODO: 在此添加命令处理程序代码
+	m_pSet->MoveFirst();
+	if (m_pSet->IsBOF()) {
+		m_pSet->MoveFirst();
+	}
+	UpdateData(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(true);
+	if (flag)
+	{
+		CString s;
+		CImage img;
+		CDC *pDC = GetDlgItem(IDC_PICTURE)->GetDC();//凡是用到getdc必须释放它
+		pDC->SetStretchBltMode(HALFTONE);//图像不失真
+		m_pSet->GetFieldValue(short(4), s);
+
+		img.Load(s);
+
+		int sx, sy, w, h;
+		foo(img, sx, sy, w, h);
+		img.Draw(pDC->m_hDC, sx, sy, w, h);
+	}
+}
+
+
+void CMFCExp111View::OnRecordNext()
+{
+	// TODO: 在此添加命令处理程序代码
+	m_pSet->MoveNext();
+	if (m_pSet->IsBOF()) {
+		m_pSet->MoveNext();
+	}
+	UpdateData(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(true);
+	if (flag)
+	{
+		CString s;
+		CImage img;
+		CDC *pDC = GetDlgItem(IDC_PICTURE)->GetDC();//凡是用到getdc必须释放它
+		pDC->SetStretchBltMode(HALFTONE);//图像不失真
+		m_pSet->GetFieldValue(short(4), s);
+
+		img.Load(s);
+
+		int sx, sy, w, h;
+		foo(img, sx, sy, w, h);
+		img.Draw(pDC->m_hDC, sx, sy, w, h);
+	}
+}
+
+
+void CMFCExp111View::OnRecordLast()
+{
+	// TODO: 在此添加命令处理程序代码
+	m_pSet->MoveLast();
+	UpdateData(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(false);
+	GetDlgItem(IDC_PICTURE)->ShowWindow(true);
+	if (flag)
+	{
+		CString s;
+		CImage img;
+		CDC *pDC = GetDlgItem(IDC_PICTURE)->GetDC();//凡是用到getdc必须释放它
+		pDC->SetStretchBltMode(HALFTONE);//图像不失真
+		m_pSet->GetFieldValue(short(4), s);
+
+		img.Load(s);
+
+		int sx, sy, w, h;
+		foo(img, sx, sy, w, h);
+		img.Draw(pDC->m_hDC, sx, sy, w, h);
+	}
+}
+
+
+void CMFCExp111View::OnAutoDisplay()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (flag)
+	{
+		flag = 0;
+	}
+	else
+		flag = 1;
 }
