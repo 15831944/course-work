@@ -58,6 +58,7 @@ public:
 	afx_msg void OnRecordNext();
 	afx_msg void OnRecordLast();
 	afx_msg void OnAutoDisplay();
+	afx_msg void OnPaint();
 };
 
 #ifndef _DEBUG  // MFCExp11.1View.cpp 中的调试版本
