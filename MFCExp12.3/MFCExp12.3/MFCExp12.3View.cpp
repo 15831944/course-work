@@ -140,10 +140,7 @@ void CMFCExp123View::OnBnClickedEdit()
 	{
 		double aaa = edit.a;
 		m_pSet->Edit();
-		//m_pSet->m_ID = aaa;
-		CString s;
-		s.Format(_T("%d"), aaa);
-		SetDlgItemText(IDC_CHANGE, s);
+		m_pSet->m_ID = aaa;
 		m_pSet->Update();
 		UpdateData(false);
 	}
