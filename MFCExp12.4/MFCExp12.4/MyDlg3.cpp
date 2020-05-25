@@ -44,17 +44,22 @@ BOOL MyDlg3::OnInitDialog()
 	CDialogEx::OnInitDialog();		
 
 	// TODO:  在此添加额外的初始化
-	m_pSet->MoveFirst();
-	int n = m_pSet->GetODBCFieldCount();
-	while (!m_pSet->IsEOF())
+	m_list.ResetContent();
+	m_pListSet->MoveFirst();
+	int n = m_pListSet->GetODBCFieldCount();
+	CString s;
+	while (!m_pListSet->IsEOF())
 	{
+		s.Empty();
 		CString str;
 		for (int i = 0; i < n; i++)
 		{
-			m_pSet->GetFieldValue((short)i, str);
+			m_pListSet->GetFieldValue((short)i, str);
+			s += str;
+			s += "     ";
 		}
-		m_list.AddString(str);
-		m_pSet->MoveNext();
+		m_list.AddString(s);
+		m_pListSet->MoveNext();
 	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE

@@ -265,6 +265,7 @@ void CMFCExp124View::OnRecordset()
 {
 	// TODO: 在此添加命令处理程序代码
 	MyDlg3 dlg;
+	dlg.m_pListSet = m_pSet;
 	int r = dlg.DoModal();
 	if (r == IDOK)
 	{

@@ -16,7 +16,7 @@ public:
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_DIALOG4 };
 #endif
-	CMFCExp124Set* m_pSet;
+	CMFCExp124Set* m_pListSet;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
